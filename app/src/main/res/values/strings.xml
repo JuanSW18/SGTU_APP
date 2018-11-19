@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">SGTU</string>
+
+    <string name="titulo">Gerencia de Transporte Urbano</string>
+    <string name="registro">Registro</string>
+    <string name="comprar">Comprar pasaje</string>
+    <string name="buscar">Buscar ruta</string>
+    <string name="reportar">Mandar queja</string>
+    <string name="lineaTrans">Linea de transporte:</string>
+    <string name="paradero1">Paradero inicial:</string>
+    <string name="paradero2">Paradero final: </string>
+    <string name="total">Total: </string>
+    <string name="precio">S/. 0.00 </string>
+
+    <string name="hint_user">Usuario</string>
+    <string name="hint_pass">Contraseña</string>
+    <string name="hint_nombre">Nombres</string>
+    <string name="hint_ap">Apellidos</string>
+
+    <string name="iniciar_sesion">Iniciar sesion</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="crear">Crear cuenta</string>
+    <string name="btncomprar">Comprar</string>
+
+</resources>

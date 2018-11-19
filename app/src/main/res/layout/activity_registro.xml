@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="10sp"
+    android:layout_marginEnd="10sp"
+    tools:context=".RegistroActivity">
+
+    <TextView
+        android:id="@+id/tvRegistro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/registro"
+        android:textColor="@color/black"
+        android:layout_centerHorizontal="true"
+        android:textSize="25sp"
+        android:layout_marginBottom="10sp"/>
+
+    <EditText
+        android:id="@+id/edNombre"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_border"
+        android:hint="@string/hint_nombre"
+        android:padding="5sp"
+        android:layout_marginBottom="10sp"
+        android:layout_below="@id/tvRegistro"/>
+
+    <EditText
+        android:id="@+id/edApellido"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_border"
+        android:hint="@string/hint_ap"
+        android:padding="5sp"
+        android:layout_below="@+id/edNombre"
+        android:layout_marginBottom="10sp"/>
+
+    <EditText
+        android:id="@+id/edNuevoUsuario"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_border"
+        android:hint="@string/hint_user"
+        android:padding="5sp"
+        android:layout_marginBottom="10sp"
+        android:layout_below="@id/edApellido"/>
+
+    <EditText
+        android:id="@+id/edNuevoPass"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_border"
+        android:hint="@string/hint_pass"
+        android:padding="5sp"
+        android:layout_below="@+id/edNuevoUsuario"
+        android:layout_marginBottom="20sp"/>
+
+    <Button
+        android:id="@+id/btnRegistrar"
+        android:onClick="registrarUsuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/crear"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_btn"
+        android:elevation="10dp"
+        android:layout_marginBottom="10sp"
+        android:layout_below="@id/edNuevoPass"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/logo_municipalidad2" />
+
+</RelativeLayout>

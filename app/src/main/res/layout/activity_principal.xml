@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".PrincipalActivity">
+
+    <include
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="5sp"
+        android:background="@drawable/btn_image"
+        android:elevation="10sp"
+        android:layout_margin="20sp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="55sp"
+            android:src="@drawable/map128"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/buscar"
+            android:textSize="20sp"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:onClick="redirectCompra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="5sp"
+        android:background="@drawable/btn_image"
+        android:elevation="10sp"
+        android:layout_margin="20sp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="70sp"
+            android:src="@drawable/bus_ticket128"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/comprar"
+            android:textSize="20sp"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="5sp"
+        android:background="@drawable/btn_image"
+        android:elevation="10sp"
+        android:layout_margin="20sp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="70sp"
+            android:src="@drawable/newspaper64"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reportar"
+            android:textSize="20sp"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+</LinearLayout>
