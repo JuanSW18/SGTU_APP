@@ -11,6 +11,8 @@
     <string name="paradero2">Paradero final: </string>
     <string name="total">Total: </string>
     <string name="precio">S/. 0.00 </string>
+    <string name="descrip">Descripcion </string>
+    <string name="asunto">Escriba aqui el motivo de la queja </string>
 
     <string name="hint_user">Usuario</string>
     <string name="hint_pass">Contraseña</string>
@@ -21,5 +23,6 @@
     <string name="registrarse">Registrarse</string>
     <string name="crear">Crear cuenta</string>
     <string name="btncomprar">Comprar</string>
+    <string name="enviar">Enviar</string>
 
 </resources>

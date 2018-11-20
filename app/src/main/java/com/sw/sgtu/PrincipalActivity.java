@@ -32,4 +32,9 @@ public class PrincipalActivity extends AppCompatActivity {
         intent = new Intent(PrincipalActivity.this, ComprarActivity.class);
         startActivity(intent);
     }
+
+    public void redirectReportar(View view) {
+        intent = new Intent(PrincipalActivity.this, ReportarActivity.class);
+        startActivity(intent);
+    }
 }
