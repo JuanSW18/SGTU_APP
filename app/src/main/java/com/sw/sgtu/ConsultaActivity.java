@@ -3,17 +3,18 @@ package com.sw.sgtu;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sw.sgtu.adapter.QuejaAdapter;
 import com.sw.sgtu.conexion.ApiAdapter;
 import com.sw.sgtu.conexion.ApiService;
 import com.sw.sgtu.modelo.BusLine;
@@ -26,19 +27,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReportarActivity extends AppCompatActivity {
+public class ConsultaActivity extends AppCompatActivity {
 
     Intent intent;
 
     ApiService apiService;
     private final String TAG = ComprarActivity.class.getSimpleName();
 
-    Toast toast;
-
     TextView tvToolBar;
     Toolbar myToolbar;
-
-    EditText edDescripcion;
 
     Spinner spLineaTransporte;
 
@@ -46,70 +43,48 @@ public class ReportarActivity extends AppCompatActivity {
     ArrayList<String> lineasTransporteNombre = new ArrayList<>();
     ArrayAdapter<String> arAdpLineasTransporte = null;
 
-    int id_linea_transporte;
-
-    Queja queja;
     private RecyclerView recyclerView;
+    private List<Queja> listaQuejas = new ArrayList<>();
+    private QuejaAdapter quejaAdapter;
+
+    TextView tvSinQuejas;
+
+    int id_linea_transporte;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reportar);
-
-        spLineaTransporte = findViewById(R.id.spinnerLineaTransporte);
-        edDescripcion = findViewById(R.id.edDescripcion);
+        setContentView(R.layout.activity_consulta);
 
         myToolbar = (Toolbar) findViewById(R.id.appToolBar);
         tvToolBar =  myToolbar.findViewById(R.id.appToolBar_title);
+
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        tvToolBar.setText("Reportar");
 
+        tvToolBar.setText("Consultar linea de transporte");
+
+        spLineaTransporte = findViewById(R.id.spinnerLineaTransporte);
         getBusLines();
+
+        recyclerView = findViewById(R.id.recycler_view_quejas);
+        quejaAdapter = new QuejaAdapter(ConsultaActivity.this, listaQuejas);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ConsultaActivity.this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(quejaAdapter);
+
+        tvSinQuejas = findViewById(R.id.tvSinQuejas);
 
         spLineaTransporte.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 id_linea_transporte = position;
+                getListQueja(id_linea_transporte);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
-    }
-
-    public void reportar(View view) {
-        if(edDescripcion.getText().toString().isEmpty()){
-            toast = Toast.makeText(ReportarActivity.this, "Descripcion vacia!", Toast.LENGTH_SHORT);
-            toast.show();
-        }else {
-            queja = new Queja();
-            queja.setId_usuario(33);
-            queja.setId_linea_transporte(id_linea_transporte);
-            queja.setDescripcion(edDescripcion.getText().toString());
-            enviarQueja(queja);
-        }
-    }
-
-    public void enviarQueja(Queja request){
-        apiService = ApiAdapter.createService(ApiService.class);
-        Call<Queja> call = apiService.enviarQueja(request);
-        call.enqueue(new Callback<Queja>() {
-            @Override
-            public void onResponse(Call<Queja> call, Response<Queja> response) {
-                if(response.isSuccessful()){
-                    toast = Toast.makeText(ReportarActivity.this, "Reporte enviado", Toast.LENGTH_SHORT);
-                    toast.show();
-                    intent = new Intent(ReportarActivity.this, PrincipalActivity.class);
-                    startActivity(intent);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Queja> call, Throwable t) {
-                Log.e(TAG, "PASO ALGO:\n Unable to submit post to API.");
             }
         });
     }
@@ -126,7 +101,7 @@ public class ReportarActivity extends AppCompatActivity {
                         lineasTransporteNombre.add(busLine.getNombre());
                     }
 
-                    arAdpLineasTransporte = new ArrayAdapter<String>(ReportarActivity.this,
+                    arAdpLineasTransporte = new ArrayAdapter<String>(ConsultaActivity.this,
                             android.R.layout.simple_dropdown_item_1line, lineasTransporteNombre);
 
                     spLineaTransporte.setAdapter(arAdpLineasTransporte);
@@ -137,7 +112,7 @@ public class ReportarActivity extends AppCompatActivity {
                     b2.setNombre("Ate - Callao");
                     lineasTransporteNombre.add(b1.getNombre());
                     lineasTransporteNombre.add(b2.getNombre());
-                    arAdpLineasTransporte = new ArrayAdapter<String>(ReportarActivity.this,
+                    arAdpLineasTransporte = new ArrayAdapter<String>(ConsultaActivity.this,
                             android.R.layout.simple_dropdown_item_1line, lineasTransporteNombre);
 
                     spLineaTransporte.setAdapter(arAdpLineasTransporte);
@@ -146,6 +121,33 @@ public class ReportarActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<BusLine>> call, Throwable t) {
+                Log.e(TAG, "PASO ALGO:\n Unable to submit post to API.");
+            }
+        });
+    }
+
+    public void getListQueja(int id_linea_transporte){
+        apiService = ApiAdapter.createService(ApiService.class);
+        Call<List<Queja>> call = apiService.getListQueja(id_linea_transporte);
+        call.enqueue(new Callback<List<Queja>>() {
+            @Override
+            public void onResponse(Call<List<Queja>> call, Response<List<Queja>> response) {
+                if(response.isSuccessful()){
+                    listaQuejas.clear();
+                    for (Queja permiso: response.body()){
+                        listaQuejas.add(permiso);
+                    }
+                    quejaAdapter.notifyDataSetChanged();
+                    if(listaQuejas.size() == 0){
+                        tvSinQuejas.setVisibility(View.VISIBLE);
+                    }else{
+                        tvSinQuejas.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Queja>> call, Throwable t) {
                 Log.e(TAG, "PASO ALGO:\n Unable to submit post to API.");
             }
         });

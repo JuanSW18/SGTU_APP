@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"/>
 
     <LinearLayout
+        android:onClick="redirectConsulta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -21,11 +22,40 @@
         android:padding="5sp"
         android:background="@drawable/btn_image"
         android:elevation="10sp"
-        android:layout_margin="20sp">
+        android:layout_marginTop="15sp"
+        android:layout_marginStart="15sp"
+        android:layout_marginEnd="15sp"
+        android:layout_marginBottom="20sp">
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="55sp"
+            android:layout_height="50sp"
+            android:src="@drawable/book128"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/consulta"
+            android:textSize="20sp"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:onClick="redirectMapa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="5sp"
+        android:background="@drawable/btn_image"
+        android:elevation="10sp"
+        android:layout_marginStart="15sp"
+        android:layout_marginEnd="15sp"
+        android:layout_marginBottom="20sp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="45sp"
             android:src="@drawable/map128"/>
 
         <TextView
@@ -45,11 +75,13 @@
         android:padding="5sp"
         android:background="@drawable/btn_image"
         android:elevation="10sp"
-        android:layout_margin="20sp">
+        android:layout_marginStart="15sp"
+        android:layout_marginEnd="15sp"
+        android:layout_marginBottom="20sp">
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="70sp"
+            android:layout_height="60sp"
             android:src="@drawable/bus_ticket128"/>
 
         <TextView
@@ -69,11 +101,13 @@
         android:padding="5sp"
         android:background="@drawable/btn_image"
         android:elevation="10sp"
-        android:layout_margin="20sp">
+        android:layout_marginStart="15sp"
+        android:layout_marginEnd="15sp"
+        android:layout_marginBottom="20sp">
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="70sp"
+            android:layout_height="60sp"
             android:src="@drawable/newspaper64"/>
 
         <TextView

@@ -111,6 +111,7 @@
                 android:paddingEnd="10sp"/>
 
             <TextView
+                android:id="@+id/tvPrecio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/precio"
@@ -119,6 +120,7 @@
         </LinearLayout>
 
         <Button
+            android:onClick="confirmarCompra"
             android:id="@+id/btnIniciarSesion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

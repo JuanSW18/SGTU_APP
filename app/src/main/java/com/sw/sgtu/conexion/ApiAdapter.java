@@ -12,7 +12,7 @@ public class ApiAdapter {
 
     private static ApiAdapter API_SERVICE;
 
-    private final static String BASE_API_URL = "http://138.68.58.129:8000/";
+    private final static String BASE_API_URL = "https://ptransporte.herokuapp.com/";
     private static Retrofit retrofit = null;
     private static Gson gson = new GsonBuilder().create();
 

@@ -37,4 +37,14 @@ public class PrincipalActivity extends AppCompatActivity {
         intent = new Intent(PrincipalActivity.this, ReportarActivity.class);
         startActivity(intent);
     }
+
+    public void redirectMapa(View view) {
+        intent = new Intent(PrincipalActivity.this, MapsActivity.class);
+        startActivity(intent);
+    }
+
+    public void redirectConsulta(View view) {
+        intent = new Intent(PrincipalActivity.this, ConsultaActivity.class);
+        startActivity(intent);
+    }
 }
