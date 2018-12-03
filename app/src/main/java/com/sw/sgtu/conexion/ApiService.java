@@ -7,6 +7,7 @@ import com.sw.sgtu.modelo.Pasaje;
 import com.sw.sgtu.modelo.Queja;
 import com.sw.sgtu.modelo.Usuario;
 import com.sw.sgtu.request.LoginResponse;
+import com.sw.sgtu.request.ParaderoResponse;
 
 import java.util.List;
 
@@ -50,4 +51,8 @@ public interface ApiService {
     @POST("login")
     @Headers({"Accept: application/json"})
     Call<LoginResponse> validarUsuario(@Body Usuario request);
+
+    @GET("lista-paraderos")
+    @Headers({"Accept: application/json"})
+    Call<List<ParaderoResponse>> getListParaderosLatLon();
 }

@@ -14,6 +14,9 @@ public class PrincipalActivity extends AppCompatActivity {
 
     Intent intent;
 
+    private Bundle bundle;
+    int ID_USUARIO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,16 +29,21 @@ public class PrincipalActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         tvToolBar.setText("Inicio");
+
+        bundle = getIntent().getExtras();
+        ID_USUARIO = bundle.getInt("ID_USUARIO");
     }
 
     public void redirectCompra(View view) {
         //intent = new Intent(PrincipalActivity.this, ComprarActivity.class);
         intent = new Intent(PrincipalActivity.this, RegistroCompraActivity.class);
+        intent.putExtra("ID_USUARIO", ID_USUARIO);
         startActivity(intent);
     }
 
     public void redirectReportar(View view) {
         intent = new Intent(PrincipalActivity.this, ReportarActivity.class);
+        intent.putExtra("ID_USUARIO", ID_USUARIO);
         startActivity(intent);
     }
 

@@ -1,7 +1,10 @@
 package com.sw.sgtu;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -14,6 +17,16 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.sw.sgtu.conexion.ApiAdapter;
+import com.sw.sgtu.conexion.ApiService;
+import com.sw.sgtu.request.ParaderoResponse;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MapsActivity extends FragmentActivity implements
         OnMapReadyCallback,
@@ -25,6 +38,15 @@ public class MapsActivity extends FragmentActivity implements
     private Marker mSydney;
     private Marker mBrisbane;*/
 
+    Intent intent;
+
+    ApiService apiService;
+    private final String TAG = RegistroActivity.class.getSimpleName();
+
+    Toast toast;
+
+    List<ParaderoResponse> paraderoResponseList = new ArrayList<>();
+
     private int puntos_seleccionados = 0;
 
     @Override
@@ -35,6 +57,7 @@ public class MapsActivity extends FragmentActivity implements
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
     }
 
 
@@ -52,26 +75,55 @@ public class MapsActivity extends FragmentActivity implements
         mMap = googleMap;
         mMap.getUiSettings().setMapToolbarEnabled(false);
 
-        // Add a marker in Sydney and move the camera
-        /*LatLng sanmarcos = new LatLng(-12.0558094, -77.0882352);
-        mMap.addMarker(new MarkerOptions().position(sanmarcos).title("UNMSM"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sanmarcos));*/
-
         LatLng centro = new LatLng(-12.0566208, -77.0798912);
         CameraPosition camPos = new CameraPosition.Builder()
-                .target(centro)   //Centramos el mapa en Madrid
-                .zoom(15)         //Establecemos el zoom en 19
-                .bearing(45)      //Establecemos la orientación con el noreste arriba//Bajamos el punto de vista de la cámara 70 grados
+                .target(centro)   //Centramos el mapa
+                .zoom(15)         //Establecemos el zoom
+                .bearing(45)      //Establecemos la orientación con el noreste arriba
                 .build();
 
         CameraUpdate camUpd3 =
                 CameraUpdateFactory.newCameraPosition(camPos);
 
         mMap.animateCamera(camUpd3);
-        Antut(googleMap);
+        //Antut(googleMap);
+        getListParaderosLatLon(googleMap);
     }
 
-    public void Antut(GoogleMap googleMap){
+    public void getListParaderosLatLon(final GoogleMap googleMap) {
+        apiService = ApiAdapter.createServiceSecondAPI(ApiService.class);
+        Call<List<ParaderoResponse>> call = apiService.getListParaderosLatLon();
+        call.enqueue(new Callback<List<ParaderoResponse>>() {
+            @Override
+            public void onResponse(Call<List<ParaderoResponse>> call, Response<List<ParaderoResponse>> response) {
+                if(response.isSuccessful()){
+                    paraderoResponseList = response.body();
+                    colocarPuntos(googleMap, paraderoResponseList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ParaderoResponse>> call, Throwable t) {
+                Log.e(TAG, "PASO ALGO:\n Unable to submit post to API.");
+            }
+        });
+    }
+
+    public void colocarPuntos(GoogleMap googleMap, List<ParaderoResponse> paraderos){
+        mMap = googleMap;
+        for (ParaderoResponse paradero: paraderos){
+            LatLng punto = new LatLng(paradero.getLatitud(), paradero.getLongitud());
+            System.out.println("punto " + punto);
+            System.out.println("Direccion " + paradero.getDireccion());
+            mMap.addMarker(new MarkerOptions().position(punto)
+                    .title(paradero.getDireccion())
+                    .icon(BitmapDescriptorFactory.defaultMarker()))
+                    .setTag(0);
+        }
+        mMap.setOnMarkerClickListener(this);
+    }
+
+    /*public void Antut(GoogleMap googleMap){
         mMap = googleMap;
 
         final LatLng punto1 = new LatLng(-12.049462, -77.078151);
@@ -107,7 +159,7 @@ public class MapsActivity extends FragmentActivity implements
 
         mMap.setOnMarkerClickListener(this);
 
-    }
+    }*/
 
     public boolean onMarkerClick(final Marker marker) {
 
@@ -141,4 +193,13 @@ public class MapsActivity extends FragmentActivity implements
         return false;
     }
 
+    public void redirectPosiblesRutas(View view) {
+        if(puntos_seleccionados == 2){
+            intent = new Intent(MapsActivity.this, ResultadosActivity.class);
+            startActivity(intent);
+        }else {
+            toast = Toast.makeText(this, "Necesita seleccionar 2 paraderos", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
 }

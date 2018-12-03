@@ -37,6 +37,9 @@ public class RegistroCompraActivity extends AppCompatActivity {
     private List<Compra> listaCompras = new ArrayList<>();
     private CompraAdapter compraAdapter;
 
+    private Bundle bundle;
+    int ID_USUARIO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,9 @@ public class RegistroCompraActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(RegistroCompraActivity.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(compraAdapter);
+
+        bundle = getIntent().getExtras();
+        ID_USUARIO = bundle.getInt("ID_USUARIO");
 
         getListCompraPrueba();
 
@@ -89,14 +95,18 @@ public class RegistroCompraActivity extends AppCompatActivity {
 
     public void getListCompraPrueba() {
         Compra c1 = new Compra();
-        c1.setFecha("02/12/18");
-        c1.setPrecio(2.50);
-        c1.setRuta("Chama 5648");
+        c1.setFecha("2018-10-11 15:13:00");
+        c1.setLinea_transporte("Chama 7606");
+        c1.setParadero_inicial("Parque Villa Alegre");
+        c1.setParadero_final("Av. Salaverry");
+        c1.setCosto(2.50);
 
         Compra c2 = new Compra();
-        c2.setFecha("01/12/18");
-        c2.setPrecio(1.50);
-        c2.setRuta("Consorcio 3020");
+        c2.setFecha("2018-10-11 15:13:00");
+        c2.setLinea_transporte("Chama 7530");
+        c2.setParadero_inicial("Parque Villa Alegre");
+        c2.setParadero_final("Av. Tupac Amaru");
+        c2.setCosto(2.50);
 
         listaCompras.add(c1);
         listaCompras.add(c2);
@@ -105,6 +115,7 @@ public class RegistroCompraActivity extends AppCompatActivity {
 
     public void redirectCompra(View view) {
         intent = new Intent(RegistroCompraActivity.this, ComprarActivity.class);
+        intent.putExtra("ID_USUARIO", ID_USUARIO);
         startActivity(intent);
     }
 }

@@ -51,6 +51,9 @@ public class ReportarActivity extends AppCompatActivity {
     Queja queja;
     private RecyclerView recyclerView;
 
+    private Bundle bundle;
+    int ID_USUARIO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +67,9 @@ public class ReportarActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         tvToolBar.setText("Reportar");
+
+        bundle = getIntent().getExtras();
+        ID_USUARIO = bundle.getInt("ID_USUARIO");
 
         getBusLines();
 
@@ -86,7 +92,7 @@ public class ReportarActivity extends AppCompatActivity {
             toast.show();
         }else {
             queja = new Queja();
-            queja.setId_usuario(33);
+            queja.setId_usuario(ID_USUARIO);
             queja.setId_linea_transporte(id_linea_transporte);
             queja.setDescripcion(edDescripcion.getText().toString());
             enviarQueja(queja);

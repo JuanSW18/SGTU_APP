@@ -55,6 +55,9 @@ public class ComprarActivity extends AppCompatActivity {
 
     Toast toast;
 
+    private Bundle bundle;
+    int ID_USUARIO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +74,9 @@ public class ComprarActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         tvToolBar.setText("Comprar pasaje");
+
+        bundle = getIntent().getExtras();
+        ID_USUARIO = bundle.getInt("ID_USUARIO");
 
         getBusLines();
 
@@ -207,7 +213,7 @@ public class ComprarActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         Pasaje pasaje = new Pasaje();
                         pasaje.setLinea_transporte(1);
-                        pasaje.setUsuario(24);
+                        pasaje.setUsuario(ID_USUARIO);
                         pasaje.setCosto(1.5);
                         pasaje.setParadero_inicial(pasaje_paradero_inicio);
                         pasaje.setParadero_final(pasaje_paradero_fin);

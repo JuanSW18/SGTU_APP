@@ -23,11 +23,14 @@ public class CompraAdapter extends RecyclerView.Adapter<CompraAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView itemCompraFecha, itemCompraRuta, itemCompraPrecio;
+        private TextView itemCompraFecha, itemCompraLinea, itemCompraPrecio,
+                itemCompraParaderoInicial, itemCompraParaderofinal;
         public ViewHolder(View itemView) {
             super(itemView);
             itemCompraFecha = itemView.findViewById(R.id.itemCompraFecha);
-            itemCompraRuta = itemView.findViewById(R.id.itemCompraRuta);
+            itemCompraLinea = itemView.findViewById(R.id.itemCompraLinea);
+            itemCompraParaderoInicial = itemView.findViewById(R.id.itemCompraParaderoInicial);
+            itemCompraParaderofinal = itemView.findViewById(R.id.itemCompraParaderoFinal);
             itemCompraPrecio = itemView.findViewById(R.id.itemCompraPrecio);
         }
     }
@@ -36,9 +39,11 @@ public class CompraAdapter extends RecyclerView.Adapter<CompraAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Compra compra = listaCompra.get(position);
-        String precio = "S/ " + compra.getPrecio();
+        String precio = "S/ " + compra.getCosto();
         holder.itemCompraFecha.setText(compra.getFecha());
-        holder.itemCompraRuta.setText(compra.getRuta());
+        holder.itemCompraLinea.setText(compra.getLinea_transporte());
+        holder.itemCompraParaderoInicial.setText(compra.getParadero_inicial());
+        holder.itemCompraParaderofinal.setText(compra.getParadero_final());
         holder.itemCompraPrecio.setText(precio);
     }
 

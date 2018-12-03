@@ -32,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText edUsuario;
     EditText edPassword;
 
+    int ID_USUARIO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,17 +73,26 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.isSuccessful()){
-                    // FALTA OBTENER ID
-                    toast = Toast.makeText(LoginActivity.this, "Bienvenido", Toast.LENGTH_SHORT);
-                    toast.show();
-                    intent = new Intent(LoginActivity.this, PrincipalActivity.class);
-                    startActivity(intent);
-                }else {
+                    int valido = response.body().getValid();
+                    if(valido == 1){
+                        ID_USUARIO = response.body().getUserResponse().get(0).getId_usuario();
+
+                        toast = Toast.makeText(LoginActivity.this, "Bienvenido", Toast.LENGTH_SHORT);
+                        toast.show();
+                        intent = new Intent(LoginActivity.this, PrincipalActivity.class);
+                        intent.putExtra("ID_USUARIO", ID_USUARIO);
+                        startActivity(intent);
+                    }else{
+                        toast = Toast.makeText(LoginActivity.this, "Usuario y/o contraseña incorrectos", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
+                }/*else {
                     toast = Toast.makeText(LoginActivity.this, "Usuario y/o contraseña incorrectos", Toast.LENGTH_SHORT);
                     toast.show();
                     intent = new Intent(LoginActivity.this, PrincipalActivity.class);
                     startActivity(intent);
-                }
+                }*/
                 edUsuario.setText("");
                 edPassword.setText("");
             }
