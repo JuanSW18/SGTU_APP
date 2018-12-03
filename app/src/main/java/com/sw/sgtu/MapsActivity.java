@@ -2,21 +2,30 @@ package com.sw.sgtu;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements
+        OnMapReadyCallback,
+        GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
+
+    /*private Marker mPerth;
+    private Marker mSydney;
+    private Marker mBrisbane;*/
+
+    private int puntos_seleccionados = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +50,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.getUiSettings().setMapToolbarEnabled(false);
 
         // Add a marker in Sydney and move the camera
         /*LatLng sanmarcos = new LatLng(-12.0558094, -77.0882352);
@@ -73,25 +83,62 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         final LatLng punto7 = new LatLng(-12.0570522, -77.0797949);
 
         mMap.addMarker(new MarkerOptions().position(punto1).title("Paradero Av. Colonial")
-                .icon(BitmapDescriptorFactory.defaultMarker()));
+                .icon(BitmapDescriptorFactory.defaultMarker())).setTag(0);
 
         mMap.addMarker(new MarkerOptions().position(punto2).title("Paradero Av. Venezuela")
-                .icon(BitmapDescriptorFactory.defaultMarker()));
+                .icon(BitmapDescriptorFactory.defaultMarker())).setTag(0);
 
         mMap.addMarker(new MarkerOptions().position(punto3).title("Paradero Av. Argentina")
-                .icon(BitmapDescriptorFactory.defaultMarker()));
+                .icon(BitmapDescriptorFactory.defaultMarker())).setTag(0);
 
         mMap.addMarker(new MarkerOptions().position(punto4).title("Paradero Av. Maquinarias")
-                .icon(BitmapDescriptorFactory.defaultMarker()));
+                .icon(BitmapDescriptorFactory.defaultMarker())).setTag(0);
 
         mMap.addMarker(new MarkerOptions().position(punto5).title("Paradero Ferre")
-                .icon(BitmapDescriptorFactory.defaultMarker()));
+                .icon(BitmapDescriptorFactory.defaultMarker())).setTag(0);
 
         mMap.addMarker(new MarkerOptions().position(punto6).title("Paradero Calle Tulipanes")
-                .icon(BitmapDescriptorFactory.defaultMarker()));
+                .icon(BitmapDescriptorFactory.defaultMarker())).setTag(0);
 
         mMap.addMarker(new MarkerOptions().position(punto7).title("Paradero Amezaga")
-                .icon(BitmapDescriptorFactory.defaultMarker()));
+                .icon(BitmapDescriptorFactory.defaultMarker())).setTag(0);
+
+
+
+        mMap.setOnMarkerClickListener(this);
 
     }
+
+    public boolean onMarkerClick(final Marker marker) {
+
+        // Retrieve the data from the marker.
+        Integer clickCount = (Integer) marker.getTag();
+
+        // Check if a click count was set, then display the click count.
+
+        if (clickCount != null) {
+            clickCount = clickCount + 1;
+            if(clickCount == 2){
+                clickCount = 0;
+                marker.setIcon(BitmapDescriptorFactory.defaultMarker());
+                marker.setTag(clickCount);
+                puntos_seleccionados--;
+            }else {
+                if(puntos_seleccionados != 2){
+                    marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    marker.setTag(clickCount);
+                    Toast.makeText(this,marker.getTitle() + " ha sido seleccionado",
+                            Toast.LENGTH_SHORT).show();
+                    puntos_seleccionados++;
+                }
+            }
+            System.out.println("SE SELECCIONO " + puntos_seleccionados + " PUNTOS!");
+        }
+
+        // Return false to indicate that we have not consumed the event and that we wish
+        // for the default behavior to occur (which is for the camera to move such that the
+        // marker is centered and for the marker's info window to open, if it has one).
+        return false;
+    }
+
 }

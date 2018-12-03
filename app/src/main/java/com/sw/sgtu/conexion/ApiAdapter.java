@@ -13,7 +13,9 @@ public class ApiAdapter {
     private static ApiAdapter API_SERVICE;
 
     private final static String BASE_API_URL = "https://ptransporte.herokuapp.com/";
+    private final static String BASE_API_URL_TWO = "https://apipatrones.herokuapp.com/";
     private static Retrofit retrofit = null;
+    private static Retrofit retrofit_two = null;
     private static Gson gson = new GsonBuilder().create();
 
     private static HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -31,5 +33,16 @@ public class ApiAdapter {
                     .build();
         }
         return retrofit.create(serviceClass);
+    }
+
+    public static <T> T createServiceSecondAPI(Class<T> serviceClass){
+        if(retrofit_two == null){
+            retrofit_two = new Retrofit.Builder()
+                    .client(okHttpClient)
+                    .baseUrl(BASE_API_URL_TWO)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+        }
+        return retrofit_two.create(serviceClass);
     }
 }

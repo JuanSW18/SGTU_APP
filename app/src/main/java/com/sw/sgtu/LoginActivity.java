@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.sw.sgtu.conexion.ApiAdapter;
 import com.sw.sgtu.conexion.ApiService;
 import com.sw.sgtu.modelo.Usuario;
-import com.sw.sgtu.request.UserRequest;
+import com.sw.sgtu.request.LoginResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,8 +26,8 @@ public class LoginActivity extends AppCompatActivity {
 
     Toast toast;
 
-    UserRequest userRequest;
     Usuario usuario;
+    LoginResponse loginRequest;
 
     EditText edUsuario;
     EditText edPassword;
@@ -52,20 +52,24 @@ public class LoginActivity extends AppCompatActivity {
             toast = Toast.makeText(LoginActivity.this, "Faltan datos", Toast.LENGTH_SHORT);
             toast.show();
         }else {
-            userRequest = new UserRequest();
+            usuario = new Usuario();
+            usuario.setUsuario(edUsuario.getText().toString());
+            usuario.setPassword(edPassword.getText().toString());
+            validarUsuario(usuario);
+            /*userRequest = new LoginResponse();
             userRequest.setUsuario(edUsuario.getText().toString());
             userRequest.setPassword(edPassword.getText().toString());
-            validarUsuario(userRequest);
+            validarUsuario(userRequest);*/
         }
 
     }
 
-    public void validarUsuario(UserRequest request){
-        apiService = ApiAdapter.createService(ApiService.class);
-        Call<Usuario> call = apiService.validarUsuario(request);
-        call.enqueue(new Callback<Usuario>() {
+    public void validarUsuario(Usuario request){
+        apiService = ApiAdapter.createServiceSecondAPI(ApiService.class);
+        Call<LoginResponse> call = apiService.validarUsuario(request);
+        call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.isSuccessful()){
                     // FALTA OBTENER ID
                     toast = Toast.makeText(LoginActivity.this, "Bienvenido", Toast.LENGTH_SHORT);
@@ -75,13 +79,15 @@ public class LoginActivity extends AppCompatActivity {
                 }else {
                     toast = Toast.makeText(LoginActivity.this, "Usuario y/o contraseña incorrectos", Toast.LENGTH_SHORT);
                     toast.show();
+                    intent = new Intent(LoginActivity.this, PrincipalActivity.class);
+                    startActivity(intent);
                 }
                 edUsuario.setText("");
                 edPassword.setText("");
             }
 
             @Override
-            public void onFailure(Call<Usuario> call, Throwable t) {
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Log.e(TAG, "PASO ALGO:\n Unable to submit post to API.");
             }
         });

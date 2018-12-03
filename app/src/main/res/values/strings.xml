@@ -15,6 +15,8 @@
     <string name="asunto">Escriba aqui el motivo de la queja </string>
     <string name="consulta">Consultar linea de transporte </string>
     <string name="sinQuejas">No hay quejas registradas</string>
+    <string name="fecha">Fecha: </string>
+    <string name="precio_total">Total: </string>
 
     <string name="hint_user">Usuario</string>
     <string name="hint_pass">Contraseña</string>
@@ -27,5 +29,7 @@
     <string name="btncomprar">Comprar</string>
     <string name="enviar">Enviar</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="buscarRuta">Buscar ruta</string>
 
 </resources>

@@ -1,13 +1,20 @@
-package com.sw.sgtu.modelo;
+package com.sw.sgtu.request;
 
-import com.google.gson.annotations.Expose;
+public class UserResponse {
 
-public class Usuario {
-
+    private int id_usuario;
     private String nombre;
     private String apellido;
     private String usuario;
-    private String password;
+    private int tipo_usuario;
+
+    public int getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(int id_usuario) {
+        this.id_usuario = id_usuario;
+    }
 
     public String getNombre() {
         return nombre;
@@ -33,12 +40,11 @@ public class Usuario {
         this.usuario = usuario;
     }
 
-    public String getPassword() {
-        return password;
+    public int getTipo_usuario() {
+        return tipo_usuario;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setTipo_usuario(int tipo_usuario) {
+        this.tipo_usuario = tipo_usuario;
     }
-
 }

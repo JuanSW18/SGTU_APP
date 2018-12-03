@@ -29,7 +29,8 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     public void redirectCompra(View view) {
-        intent = new Intent(PrincipalActivity.this, ComprarActivity.class);
+        //intent = new Intent(PrincipalActivity.this, ComprarActivity.class);
+        intent = new Intent(PrincipalActivity.this, RegistroCompraActivity.class);
         startActivity(intent);
     }
 

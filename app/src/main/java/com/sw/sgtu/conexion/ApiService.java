@@ -2,10 +2,11 @@ package com.sw.sgtu.conexion;
 
 import com.sw.sgtu.modelo.BusLine;
 import com.sw.sgtu.modelo.BusStop;
+import com.sw.sgtu.modelo.Compra;
 import com.sw.sgtu.modelo.Pasaje;
 import com.sw.sgtu.modelo.Queja;
 import com.sw.sgtu.modelo.Usuario;
-import com.sw.sgtu.request.UserRequest;
+import com.sw.sgtu.request.LoginResponse;
 
 import java.util.List;
 
@@ -29,10 +30,6 @@ public interface ApiService {
     @Headers({"Accept: application/json"})
     Call<Pasaje> comprarPasaje(@Body Pasaje request);
 
-    @POST("api/user/validar")
-    @Headers({"Accept: application/json"})
-    Call<Usuario> validarUsuario(@Body UserRequest request);
-
     @POST("api/user/")
     @Headers({"Accept: application/json"})
     Call<Usuario> registrarUsuario(@Body Usuario request);
@@ -45,5 +42,12 @@ public interface ApiService {
     @Headers({"Accept: application/json"})
     Call<List<Queja>> getListQueja(@Path("id_queja") int id_queja);
 
+    @GET("api/queja/{id_queja}")
+    @Headers({"Accept: application/json"})
+    Call<List<Compra>> getListCompra(@Path("id_usuario") int id_usuario);
 
+    /*Segunda API*/
+    @POST("login")
+    @Headers({"Accept: application/json"})
+    Call<LoginResponse> validarUsuario(@Body Usuario request);
 }

@@ -7,5 +7,6 @@
     <color name="black">#000000</color>
     <color name="gtu">#16236e</color>
     <color name="white">#FFFFFF</color>
-
+    <color name="grey">#fcfcfc</color>
+    <color name="grey_dark">#f1f1f1</color>
 </resources>
