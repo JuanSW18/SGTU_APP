@@ -43,10 +43,6 @@ public interface ApiService {
     @Headers({"Accept: application/json"})
     Call<List<Queja>> getListQueja(@Path("id_queja") int id_queja);
 
-    @GET("api/queja/{id_queja}")
-    @Headers({"Accept: application/json"})
-    Call<List<Compra>> getListCompra(@Path("id_usuario") int id_usuario);
-
     /*Segunda API*/
     @POST("login")
     @Headers({"Accept: application/json"})
@@ -55,4 +51,8 @@ public interface ApiService {
     @GET("lista-paraderos")
     @Headers({"Accept: application/json"})
     Call<List<ParaderoResponse>> getListParaderosLatLon();
+
+    @GET("lista-compras/{id_usuario}")
+    @Headers({"Accept: application/json"})
+    Call<List<Compra>> getListCompra(@Path("id_usuario") int id_usuario);
 }

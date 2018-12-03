@@ -240,8 +240,12 @@ public class ComprarActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                      toast = Toast.makeText(ComprarActivity.this, "Compra realizada", Toast.LENGTH_SHORT);
                      toast.show();
-                     intent = new Intent(ComprarActivity.this, PrincipalActivity.class);
+
+                     intent = new Intent(ComprarActivity.this, RegistroCompraActivity.class);
+                     intent.putExtra("ID_USUARIO", ID_USUARIO);
                      startActivity(intent);
+
+                    finish();
                 }
             }
 

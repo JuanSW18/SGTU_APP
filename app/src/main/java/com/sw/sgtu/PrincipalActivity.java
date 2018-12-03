@@ -54,6 +54,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
     public void redirectConsulta(View view) {
         intent = new Intent(PrincipalActivity.this, ConsultaActivity.class);
+        intent.putExtra("ID_USUARIO", ID_USUARIO);
         startActivity(intent);
     }
 }

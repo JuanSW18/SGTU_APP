@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText edPassword;
 
     int ID_USUARIO;
+    String ORIGEN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +77,12 @@ public class LoginActivity extends AppCompatActivity {
                     int valido = response.body().getValid();
                     if(valido == 1){
                         ID_USUARIO = response.body().getUserResponse().get(0).getId_usuario();
+                        ORIGEN = "LOGIN";
 
                         toast = Toast.makeText(LoginActivity.this, "Bienvenido", Toast.LENGTH_SHORT);
                         toast.show();
                         intent = new Intent(LoginActivity.this, PrincipalActivity.class);
+                        //intent.putExtra("ORIGEN", ORIGEN);
                         intent.putExtra("ID_USUARIO", ID_USUARIO);
                         startActivity(intent);
                     }else{

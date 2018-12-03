@@ -42,7 +42,7 @@ public class ReportarActivity extends AppCompatActivity {
 
     Spinner spLineaTransporte;
 
-    ArrayList<BusLine> lineasTransporte = new ArrayList<>();
+    //ArrayList<BusLine> lineasTransporte = new ArrayList<>();
     ArrayList<String> lineasTransporteNombre = new ArrayList<>();
     ArrayAdapter<String> arAdpLineasTransporte = null;
 
@@ -91,11 +91,18 @@ public class ReportarActivity extends AppCompatActivity {
             toast = Toast.makeText(ReportarActivity.this, "Descripcion vacia!", Toast.LENGTH_SHORT);
             toast.show();
         }else {
-            queja = new Queja();
-            queja.setId_usuario(ID_USUARIO);
-            queja.setId_linea_transporte(id_linea_transporte);
-            queja.setDescripcion(edDescripcion.getText().toString());
-            enviarQueja(queja);
+            if(id_linea_transporte == 0){
+                toast = Toast.makeText(ReportarActivity.this,
+                        "Seleccione una linea de transporte!",
+                        Toast.LENGTH_SHORT);
+                toast.show();
+            }else {
+                queja = new Queja();
+                queja.setId_usuario(ID_USUARIO);
+                queja.setId_linea_transporte(id_linea_transporte);
+                queja.setDescripcion(edDescripcion.getText().toString());
+                enviarQueja(queja);
+            }
         }
     }
 
@@ -109,6 +116,7 @@ public class ReportarActivity extends AppCompatActivity {
                     toast = Toast.makeText(ReportarActivity.this, "Reporte enviado", Toast.LENGTH_SHORT);
                     toast.show();
                     intent = new Intent(ReportarActivity.this, PrincipalActivity.class);
+                    intent.putExtra("ID_USUARIO", ID_USUARIO);
                     startActivity(intent);
                 }
             }
@@ -127,8 +135,12 @@ public class ReportarActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<BusLine>> call, Response<List<BusLine>> response) {
                 if(response.isSuccessful()){
+                    BusLine busLineFake = new BusLine();
+                    busLineFake.setNombre("Seleccione");
+                    lineasTransporteNombre.add(busLineFake.getNombre());
+
                     for(BusLine busLine: response.body()){
-                        lineasTransporte.add(busLine);
+                        //lineasTransporte.add(busLine);
                         lineasTransporteNombre.add(busLine.getNombre());
                     }
 
@@ -141,12 +153,12 @@ public class ReportarActivity extends AppCompatActivity {
                     b1.setNombre("Seleccione");
                     BusLine b2 = new BusLine();
                     b2.setNombre("Ate - Callao");
-                    lineasTransporteNombre.add(b1.getNombre());
+                    /*lineasTransporteNombre.add(b1.getNombre());
                     lineasTransporteNombre.add(b2.getNombre());
                     arAdpLineasTransporte = new ArrayAdapter<String>(ReportarActivity.this,
                             android.R.layout.simple_dropdown_item_1line, lineasTransporteNombre);
 
-                    spLineaTransporte.setAdapter(arAdpLineasTransporte);
+                    spLineaTransporte.setAdapter(arAdpLineasTransporte);*/
                 }
             }
 

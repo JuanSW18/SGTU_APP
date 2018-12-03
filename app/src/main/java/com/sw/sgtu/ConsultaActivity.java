@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +30,10 @@ import retrofit2.Response;
 
 public class ConsultaActivity extends AppCompatActivity {
 
+    private Bundle bundle;
+    //int ID_USUARIO;
+    int id_linea_transporte;
+
     Intent intent;
 
     ApiService apiService;
@@ -39,17 +44,18 @@ public class ConsultaActivity extends AppCompatActivity {
 
     Spinner spLineaTransporte;
 
-    ArrayList<BusLine> lineasTransporte = new ArrayList<>();
+    //ArrayList<BusLine> lineasTransporte = new ArrayList<>();
     ArrayList<String> lineasTransporteNombre = new ArrayList<>();
     ArrayAdapter<String> arAdpLineasTransporte = null;
 
-    private RecyclerView recyclerView;
+    /*private RecyclerView recyclerView;
     private List<Queja> listaQuejas = new ArrayList<>();
     private QuejaAdapter quejaAdapter;
 
-    TextView tvSinQuejas;
+    TextView tvSinQuejas;*/
 
-    int id_linea_transporte;
+    LinearLayout lyBtnInfo;
+    LinearLayout lyBtnListaQuejas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,29 +64,38 @@ public class ConsultaActivity extends AppCompatActivity {
 
         myToolbar = (Toolbar) findViewById(R.id.appToolBar);
         tvToolBar =  myToolbar.findViewById(R.id.appToolBar_title);
-
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
         tvToolBar.setText("Consultar linea de transporte");
+
+        lyBtnInfo = findViewById(R.id.lyBtnInfo);
+        lyBtnListaQuejas = findViewById(R.id.lyBtnListaQuejas);
+
+        //bundle = getIntent().getExtras();
+        //ID_USUARIO = bundle.getInt("ID_USUARIO");
 
         spLineaTransporte = findViewById(R.id.spinnerLineaTransporte);
         getBusLines();
 
-        recyclerView = findViewById(R.id.recycler_view_quejas);
+        /*recyclerView = findViewById(R.id.recycler_view_quejas);
         quejaAdapter = new QuejaAdapter(ConsultaActivity.this, listaQuejas);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ConsultaActivity.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(quejaAdapter);
 
-        tvSinQuejas = findViewById(R.id.tvSinQuejas);
+        tvSinQuejas = findViewById(R.id.tvSinQuejas);*/
 
         spLineaTransporte.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                id_linea_transporte = position;
-                getListQueja(id_linea_transporte);
+                if(position > 0){
+                    lyBtnInfo.setVisibility(View.VISIBLE);
+                    lyBtnListaQuejas.setVisibility(View.VISIBLE);
+                    id_linea_transporte = position;
+                }
+
+                //getListQueja(id_linea_transporte);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -96,8 +111,13 @@ public class ConsultaActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<BusLine>> call, Response<List<BusLine>> response) {
                 if(response.isSuccessful()){
+                    BusLine busLineFake = new BusLine();
+                    busLineFake.setNombre("Seleccione");
+
+                    //lineasTransporte.add(busLineFake);
+                    lineasTransporteNombre.add(busLineFake.getNombre());
                     for(BusLine busLine: response.body()){
-                        lineasTransporte.add(busLine);
+                        //lineasTransporte.add(busLine);
                         lineasTransporteNombre.add(busLine.getNombre());
                     }
 
@@ -110,12 +130,12 @@ public class ConsultaActivity extends AppCompatActivity {
                     b1.setNombre("Seleccione");
                     BusLine b2 = new BusLine();
                     b2.setNombre("Ate - Callao");
-                    lineasTransporteNombre.add(b1.getNombre());
+                    /*lineasTransporteNombre.add(b1.getNombre());
                     lineasTransporteNombre.add(b2.getNombre());
                     arAdpLineasTransporte = new ArrayAdapter<String>(ConsultaActivity.this,
                             android.R.layout.simple_dropdown_item_1line, lineasTransporteNombre);
 
-                    spLineaTransporte.setAdapter(arAdpLineasTransporte);
+                    spLineaTransporte.setAdapter(arAdpLineasTransporte);*/
                 }
             }
 
@@ -126,7 +146,7 @@ public class ConsultaActivity extends AppCompatActivity {
         });
     }
 
-    public void getListQueja(int id_linea_transporte){
+    /*public void getListQueja(int id_linea_transporte){
         apiService = ApiAdapter.createService(ApiService.class);
         Call<List<Queja>> call = apiService.getListQueja(id_linea_transporte);
         call.enqueue(new Callback<List<Queja>>() {
@@ -151,5 +171,19 @@ public class ConsultaActivity extends AppCompatActivity {
                 Log.e(TAG, "PASO ALGO:\n Unable to submit post to API.");
             }
         });
+    }*/
+
+    public void redirectInfoEmpresa(View view) {
+        intent = new Intent(ConsultaActivity.this, InformacionActivity.class);
+        //intent.putExtra("ID_USUARIO", ID_USUARIO);
+        intent.putExtra("ID_LINEA_TRANSPORTE", id_linea_transporte);
+        startActivity(intent);
+    }
+
+    public void redirectListaQuejas(View view) {
+        intent = new Intent(ConsultaActivity.this, HistorialQuejasActivity.class);
+        //intent.putExtra("ID_USUARIO", ID_USUARIO);
+        intent.putExtra("ID_LINEA_TRANSPORTE", id_linea_transporte);
+        startActivity(intent);
     }
 }

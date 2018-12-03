@@ -31,5 +31,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="buscarRuta">Buscar ruta</string>
+    <string name="verInfo">Informacion</string>
+    <string name="verQuejas">Lista de quejas</string>
 
 </resources>

@@ -25,6 +25,9 @@ import retrofit2.Response;
 
 public class RegistroCompraActivity extends AppCompatActivity {
 
+    private Bundle bundle;
+    int ID_USUARIO;
+
     Intent intent;
 
     ApiService apiService;
@@ -36,9 +39,6 @@ public class RegistroCompraActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<Compra> listaCompras = new ArrayList<>();
     private CompraAdapter compraAdapter;
-
-    private Bundle bundle;
-    int ID_USUARIO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +62,13 @@ public class RegistroCompraActivity extends AppCompatActivity {
 
         bundle = getIntent().getExtras();
         ID_USUARIO = bundle.getInt("ID_USUARIO");
-
-        getListCompraPrueba();
+        //getListCompraPrueba();
+        getListCompra(ID_USUARIO);
 
     }
 
     public void getListCompra(int id_usuario){
-        apiService = ApiAdapter.createService(ApiService.class);
+        apiService = ApiAdapter.createServiceSecondAPI(ApiService.class);
         Call<List<Compra>> call = apiService.getListCompra(id_usuario);
         call.enqueue(new Callback<List<Compra>>() {
             @Override
@@ -117,5 +117,6 @@ public class RegistroCompraActivity extends AppCompatActivity {
         intent = new Intent(RegistroCompraActivity.this, ComprarActivity.class);
         intent.putExtra("ID_USUARIO", ID_USUARIO);
         startActivity(intent);
+        finish();
     }
 }

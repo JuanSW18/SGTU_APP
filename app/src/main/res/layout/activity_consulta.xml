@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
     tools:context=".ConsultaActivity">
 
     <include
@@ -37,12 +38,70 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <LinearLayout
+        android:id="@+id/lyBtnInfo"
+        android:visibility="invisible"
+        android:onClick="redirectInfoEmpresa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="5sp"
+        android:background="@drawable/btn_image"
+        android:elevation="10sp"
+        android:layout_marginTop="20sp"
+        android:layout_marginStart="15sp"
+        android:layout_marginEnd="15sp"
+        android:layout_marginBottom="20sp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="60sp"
+            android:src="@drawable/customer_service_64"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/verInfo"
+            android:textSize="20sp"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lyBtnListaQuejas"
+        android:visibility="invisible"
+        android:onClick="redirectListaQuejas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="5sp"
+        android:background="@drawable/btn_image"
+        android:elevation="10sp"
+        android:layout_marginTop="20sp"
+        android:layout_marginStart="15sp"
+        android:layout_marginEnd="15sp"
+        android:layout_marginBottom="20sp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="60sp"
+            android:src="@drawable/bus_ticket128"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/verQuejas"
+            android:textSize="20sp"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+    <!--android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_quejas"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" /-->
 
-    <TextView
+    <!--TextView
         android:id="@+id/tvSinQuejas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -50,6 +109,6 @@
         android:text="@string/sinQuejas"
         android:textSize="20sp"
         android:textColor="@color/black"
-        android:visibility="invisible"/>
+        android:visibility="invisible"/-->
 
 </LinearLayout>
