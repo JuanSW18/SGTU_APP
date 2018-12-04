@@ -16,12 +16,15 @@ import android.widget.Toast;
 import com.sw.sgtu.conexion.ApiAdapter;
 import com.sw.sgtu.conexion.ApiService;
 import com.sw.sgtu.modelo.Usuario;
+import com.sw.sgtu.request.UserResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegistroActivity extends AppCompatActivity {
+
+    int ID_USUARIO=41;
 
     Intent intent;
 
@@ -37,7 +40,6 @@ public class RegistroActivity extends AppCompatActivity {
     TextView tvNivelFuerza;
 
     Usuario usuario;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,20 +73,23 @@ public class RegistroActivity extends AppCompatActivity {
 
     public void registrarUsuario(Usuario request){
         apiService = ApiAdapter.createService(ApiService.class);
-        Call<Usuario> call = apiService.registrarUsuario(request);
-        call.enqueue(new Callback<Usuario>() {
+        Call<UserResponse> call = apiService.registrarUsuario(request);
+        call.enqueue(new Callback<UserResponse>() {
             @Override
-            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 if(response.isSuccessful()){
+                    //System.out.println("BODY==>" + response.body().toString());
+                    //ID_USUARIO = response.body().getId_usuario();
                     toast = Toast.makeText(RegistroActivity.this, "Bienvenido", Toast.LENGTH_SHORT);
                     toast.show();
                     intent = new Intent(RegistroActivity.this, PrincipalActivity.class);
+                    intent.putExtra("ID_USUARIO", ID_USUARIO);
                     startActivity(intent);
                 }
             }
 
             @Override
-            public void onFailure(Call<Usuario> call, Throwable t) {
+            public void onFailure(Call<UserResponse> call, Throwable t) {
                 Log.e(TAG, "PASO ALGO:\n Unable to submit post to API.");
             }
         });

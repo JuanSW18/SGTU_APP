@@ -48,6 +48,8 @@ public class MapsActivity extends FragmentActivity implements
     List<ParaderoResponse> paraderoResponseList = new ArrayList<>();
 
     private int puntos_seleccionados = 0;
+    int ID_PARADERO_INICIAL = 3;
+    int ID_PARADERO_FINAL = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,6 +198,8 @@ public class MapsActivity extends FragmentActivity implements
     public void redirectPosiblesRutas(View view) {
         if(puntos_seleccionados == 2){
             intent = new Intent(MapsActivity.this, ResultadosActivity.class);
+            intent.putExtra("ID_PARADERO_INICIAL", ID_PARADERO_INICIAL);
+            intent.putExtra("ID_PARADERO_FINAL", ID_PARADERO_FINAL);
             startActivity(intent);
         }else {
             toast = Toast.makeText(this, "Necesita seleccionar 2 paraderos", Toast.LENGTH_SHORT);

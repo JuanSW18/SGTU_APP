@@ -3,11 +3,15 @@ package com.sw.sgtu.conexion;
 import com.sw.sgtu.modelo.BusLine;
 import com.sw.sgtu.modelo.BusStop;
 import com.sw.sgtu.modelo.Compra;
+import com.sw.sgtu.modelo.ParaderoInicioFin;
 import com.sw.sgtu.modelo.Pasaje;
 import com.sw.sgtu.modelo.Queja;
 import com.sw.sgtu.modelo.Usuario;
+import com.sw.sgtu.request.ListResultados;
 import com.sw.sgtu.request.LoginResponse;
 import com.sw.sgtu.request.ParaderoResponse;
+import com.sw.sgtu.request.ResultadosResponse;
+import com.sw.sgtu.request.UserResponse;
 
 import java.util.List;
 
@@ -33,7 +37,7 @@ public interface ApiService {
 
     @POST("api/user/")
     @Headers({"Accept: application/json"})
-    Call<Usuario> registrarUsuario(@Body Usuario request);
+    Call<UserResponse> registrarUsuario(@Body Usuario request);
 
     @POST("api/queja/")
     @Headers({"Accept: application/json"})
@@ -55,4 +59,8 @@ public interface ApiService {
     @GET("lista-compras/{id_usuario}")
     @Headers({"Accept: application/json"})
     Call<List<Compra>> getListCompra(@Path("id_usuario") int id_usuario);
+
+    @POST("buscar-linea")
+    @Headers({"Accept: application/json"})
+    Call<ListResultados> getPosiblesLineasTransporte(@Body ParaderoInicioFin paraderoInicioFin);
 }

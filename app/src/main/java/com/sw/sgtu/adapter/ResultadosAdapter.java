@@ -23,22 +23,18 @@ public class ResultadosAdapter extends RecyclerView.Adapter<ResultadosAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView itemNroDescripcion, itemDescripcion;
+        private TextView itemResultadoLinea;
         public ViewHolder(View itemView) {
             super(itemView);
-            /*itemDescripcion = itemView.findViewById(R.id.itemDescripcion);
-            itemNroDescripcion = itemView.findViewById(R.id.itemNroDescripcion);*/
+            itemResultadoLinea = itemView.findViewById(R.id.itemResultadoLinea);
         }
     }
 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        /*Queja queja = listaQueja.get(position);
-        int nro_queja = position + 1;
-        String nro = "N° " + nro_queja ;
-        holder.itemDescripcion.setText(queja.getDescripcion());
-        holder.itemNroDescripcion.setText(nro);*/
+        ResultadosResponse resultadosResponse = listaResultados.get(position);
+        holder.itemResultadoLinea.setText(resultadosResponse.getLinea_transporte());
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.sw.sgtu;
 
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,7 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegistroCompraActivity extends AppCompatActivity {
+public class HistorialCompraActivity extends AppCompatActivity {
 
     private Bundle bundle;
     int ID_USUARIO;
@@ -43,7 +42,7 @@ public class RegistroCompraActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registro_compra);
+        setContentView(R.layout.activity_historial_compra);
 
         myToolbar = (Toolbar) findViewById(R.id.appToolBar);
         tvToolBar =  myToolbar.findViewById(R.id.appToolBar_title);
@@ -54,9 +53,9 @@ public class RegistroCompraActivity extends AppCompatActivity {
         tvToolBar.setText("Mis compras");
 
         recyclerView = findViewById(R.id.recycler_view_compras);
-        compraAdapter = new CompraAdapter(RegistroCompraActivity.this, listaCompras);
+        compraAdapter = new CompraAdapter(HistorialCompraActivity.this, listaCompras);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(RegistroCompraActivity.this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HistorialCompraActivity.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(compraAdapter);
 
@@ -114,7 +113,7 @@ public class RegistroCompraActivity extends AppCompatActivity {
     }
 
     public void redirectCompra(View view) {
-        intent = new Intent(RegistroCompraActivity.this, ComprarActivity.class);
+        intent = new Intent(HistorialCompraActivity.this, ComprarActivity.class);
         intent.putExtra("ID_USUARIO", ID_USUARIO);
         startActivity(intent);
         finish();

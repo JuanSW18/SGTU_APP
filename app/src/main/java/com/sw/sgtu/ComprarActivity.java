@@ -52,7 +52,7 @@ public class ComprarActivity extends AppCompatActivity {
     TextView tvPrecio;
     int pasaje_paradero_inicio=0;
     int pasaje_paradero_fin=0;
-
+    int linea_transporte;
     Toast toast;
 
     private Bundle bundle;
@@ -84,7 +84,8 @@ public class ComprarActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position > 0){
-                    getParaderoByIdRoute(1);
+                    getParaderoByIdRoute(position);
+                    linea_transporte = position;
                 }
             }
             @Override
@@ -126,6 +127,10 @@ public class ComprarActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<BusLine>> call, Response<List<BusLine>> response) {
                 if(response.isSuccessful()){
+                    lineasTransporteNombre.clear();
+                    BusLine busLineHint = new BusLine();
+                    busLineHint.setNombre("Seleccione");
+                    lineasTransporteNombre.add(busLineHint.getNombre());
                     for(BusLine busLine: response.body()){
                         lineasTransporte.add(busLine);
                         lineasTransporteNombre.add(busLine.getNombre());
@@ -140,12 +145,12 @@ public class ComprarActivity extends AppCompatActivity {
                     b1.setNombre("Seleccione");
                     BusLine b2 = new BusLine();
                     b2.setNombre("Ate - Callao");
-                    lineasTransporteNombre.add(b1.getNombre());
+                    /*lineasTransporteNombre.add(b1.getNombre());
                     lineasTransporteNombre.add(b2.getNombre());
                     arAdpLineasTransporte = new ArrayAdapter<String>(ComprarActivity.this,
                             android.R.layout.simple_dropdown_item_1line, lineasTransporteNombre);
 
-                    spLineaTransporte.setAdapter(arAdpLineasTransporte);
+                    spLineaTransporte.setAdapter(arAdpLineasTransporte);*/
                 }
             }
 
@@ -163,6 +168,11 @@ public class ComprarActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<BusStop>> call, Response<List<BusStop>> response) {
                 if(response.isSuccessful()){
+                    paradero_nombre.clear();
+                    BusStop busStopHint = new BusStop();
+                    busStopHint.setNombre("Seleccione");
+                    paradero_nombre.add(busStopHint.getNombre());
+
                     for(BusStop busStop : response.body()){
                             busStops.add(busStop);
                             paradero_nombre.add(busStop.getNombre());
@@ -183,7 +193,7 @@ public class ComprarActivity extends AppCompatActivity {
                     BusStop p3 = new BusStop();
                     p3.setNombre("Av. Venzuela");
 
-                    paradero_nombre.add(p1.getNombre());
+                    /*paradero_nombre.add(p1.getNombre());
                     paradero_nombre.add(p2.getNombre());
                     paradero_nombre.add(p3.getNombre());
 
@@ -191,7 +201,7 @@ public class ComprarActivity extends AppCompatActivity {
                             android.R.layout.simple_dropdown_item_1line, paradero_nombre);
 
                     spParaderoInicial.setAdapter(arAdpParaderos);
-                    spParaderoFinal.setAdapter(arAdpParaderos);
+                    spParaderoFinal.setAdapter(arAdpParaderos);*/
                 }
             }
 
@@ -212,7 +222,7 @@ public class ComprarActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Pasaje pasaje = new Pasaje();
-                        pasaje.setLinea_transporte(1);
+                        pasaje.setLinea_transporte(linea_transporte);
                         pasaje.setUsuario(ID_USUARIO);
                         pasaje.setCosto(1.5);
                         pasaje.setParadero_inicial(pasaje_paradero_inicio);
@@ -241,7 +251,7 @@ public class ComprarActivity extends AppCompatActivity {
                      toast = Toast.makeText(ComprarActivity.this, "Compra realizada", Toast.LENGTH_SHORT);
                      toast.show();
 
-                     intent = new Intent(ComprarActivity.this, RegistroCompraActivity.class);
+                     intent = new Intent(ComprarActivity.this, HistorialCompraActivity.class);
                      intent.putExtra("ID_USUARIO", ID_USUARIO);
                      startActivity(intent);
 

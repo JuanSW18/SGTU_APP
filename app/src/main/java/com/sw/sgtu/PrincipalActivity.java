@@ -36,7 +36,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
     public void redirectCompra(View view) {
         //intent = new Intent(PrincipalActivity.this, ComprarActivity.class);
-        intent = new Intent(PrincipalActivity.this, RegistroCompraActivity.class);
+        intent = new Intent(PrincipalActivity.this, HistorialCompraActivity.class);
         intent.putExtra("ID_USUARIO", ID_USUARIO);
         startActivity(intent);
     }

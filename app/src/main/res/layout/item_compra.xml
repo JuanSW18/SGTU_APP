@@ -86,7 +86,6 @@
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     android:paddingStart="5sp"
-                    android:paddingEnd="5sp"
                     android:layout_marginEnd="10sp"/>
 
                 <TextView
@@ -96,8 +95,7 @@
                     android:textSize="15sp"
                     android:textColor="@color/black"
                     android:background="@color/grey"
-                    android:paddingStart="5sp"
-                    android:paddingEnd="5sp"/>
+                    android:paddingStart="5sp"/>
 
             </LinearLayout>
 
@@ -114,7 +112,6 @@
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     android:paddingStart="5sp"
-                    android:paddingEnd="5sp"
                     android:layout_marginEnd="10sp"/>
 
                 <TextView
@@ -124,8 +121,7 @@
                     android:textSize="15sp"
                     android:textColor="@color/black"
                     android:background="@color/grey"
-                    android:paddingStart="5sp"
-                    android:paddingEnd="5sp"/>
+                    android:paddingStart="5sp" />
 
             </LinearLayout>
 

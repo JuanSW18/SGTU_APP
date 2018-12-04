@@ -48,7 +48,7 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".ConsultaActivity" />
-        <activity android:name=".RegistroCompraActivity" />
+        <activity android:name=".HistorialCompraActivity" />
         <activity android:name=".ResultadosActivity" />
         <activity android:name=".HistorialQuejasActivity" />
         <activity android:name=".InformacionActivity"></activity>
